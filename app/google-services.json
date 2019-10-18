@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1035598053517",
+    "firebase_url": "https://messenger-2086c.firebaseio.com",
+    "project_id": "messenger-2086c",
+    "storage_bucket": "messenger-2086c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035598053517:android:bb90e75915639a70ae22c4",
+        "android_client_info": {
+          "package_name": "aib.projektZaliczeniowy.messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035598053517-t2b7r6f2sbhtt0kfvj584mi021tar7fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD79Mk1jJ5YCfJTRrTE_aJ0wzVNfo7cPHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035598053517-t2b7r6f2sbhtt0kfvj584mi021tar7fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
