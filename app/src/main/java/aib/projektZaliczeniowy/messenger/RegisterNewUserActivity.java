@@ -3,7 +3,6 @@ package aib.projektZaliczeniowy.messenger;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +16,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+public class RegisterNewUserActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
 
 //    Outlets:
 
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView    passwordTextView;
     private Button      loginButton;
     private Button      registerButton;
-    private Button      dontRememberButton;
 
 //    FireBase Variables:
 
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register_new_user);
         initOutlets();
 
         /* Linking auth with firebase */
@@ -48,78 +46,61 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        /* checking if user is already logged in */
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Log.i("Current User = ", String.valueOf(currentUser)); // add seguey to automaticly go to next view if loggedin
-    }
-
 //    Buttons Functions
-    public void logInButtonPressed(View view){
+    public void registerButtonPressed(View view){
         if(!emailTextView.getText().toString().matches("") && !passwordTextView.getText().toString().matches("")){
             /* email and password are not empty */
             email = String.valueOf(emailTextView.getText());
             password = String.valueOf(passwordTextView.getText());
             Log.i("email",email);
             Log.i("password",password);
-            firebaseLogInCheck();
+            firebaseSignUpCheck();
             // maybe add some animation while waiting for result
+
         }else{
             Toast.makeText(
-                    MainActivity.this,
+                    RegisterNewUserActivity.this,
                     "Proszę wpisać poprawne dane",
                     Toast.LENGTH_LONG
             );
         }
-
     }
 
-    public void RegisterButtonPressed(View view){
-        Intent goToRegister = new Intent(MainActivity.this, RegisterNewUserActivity.class);
-        MainActivity.this.startActivity(goToRegister);
-    }
 
-//    Utilities Functions:
-
+//    Utilities Functions
     private void initOutlets(){
-        emailTextView       = findViewById(R.id.emailTextView);
-        passwordTextView    = findViewById(R.id.passwordTextView);
-        loginButton         = findViewById(R.id.loginButton);
-        registerButton      = findViewById(R.id.registerButton);
-        dontRememberButton  = findViewById(R.id.lostPasswordButton);
+        emailTextView       = findViewById(R.id.emailTextViewR);
+        passwordTextView    = findViewById(R.id.passwordTextViewR);
+//        loginButton         = findViewById(R.id.loginButton);
+        registerButton      = findViewById(R.id.RegisterButtonR);
     }
 
-    private void firebaseLogInCheck(){
-        mAuth.signInWithEmailAndPassword(email, password)
+    private void firebaseSignUpCheck(){
+
+        mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if (task.isSuccessful()){
-                            /* if log in was success*/
-                            Log.i("Log in:","OK");
+                            /* if sign in was success*/
+                            Log.i("sign in:","OK");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //transfer user to next view
+                            //seguey to next view
 
-                        } else {
-                            /* if log in failed*/
-                            Log.i("Log in","failed");
+                        }else{
+                            /* if sign in failed*/
+                            Log.i("Sign in","failed" + task.getException());
                             Toast.makeText(
-                                    MainActivity.this,
-                                    "Autoryzacja nie powiodła się ",
+                                    RegisterNewUserActivity.this,
+                                    "Autoryzacja nie powiodła się , bo " + task.getException(),
                                     Toast.LENGTH_SHORT
                             ).show();
-
                         }
                     }
 
                 });
     }
-
-
-
 
 
 }
