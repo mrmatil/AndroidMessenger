@@ -3,6 +3,7 @@ package aib.projektZaliczeniowy.messenger;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,12 +67,16 @@ public class RegisterNewUserActivity extends AppCompatActivity {
         }
     }
 
+    public void loginButtonPressed(View view){
+        this.finish();
+    }
+
 
 //    Utilities Functions
     private void initOutlets(){
         emailTextView       = findViewById(R.id.emailTextViewR);
         passwordTextView    = findViewById(R.id.passwordTextViewR);
-//        loginButton         = findViewById(R.id.loginButton);
+        loginButton         = findViewById(R.id.loginButtonR);
         registerButton      = findViewById(R.id.RegisterButtonR);
     }
 
@@ -87,6 +92,7 @@ public class RegisterNewUserActivity extends AppCompatActivity {
                             Log.i("sign in:","OK");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //seguey to next view
+                            segueyToMessages(user);
 
                         }else{
                             /* if sign in failed*/
@@ -100,6 +106,11 @@ public class RegisterNewUserActivity extends AppCompatActivity {
                     }
 
                 });
+    }
+
+    private void segueyToMessages(FirebaseUser user){
+        Intent goToMessages = new Intent(RegisterNewUserActivity.this, messagesActivity.class);
+        RegisterNewUserActivity.this.startActivity(goToMessages);
     }
 
 

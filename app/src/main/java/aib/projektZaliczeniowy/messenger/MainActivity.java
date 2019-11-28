@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             /* if log in was success*/
                             Log.i("Log in:","OK");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            segueyToMessages(user);
                             //transfer user to next view
 
                         } else {
@@ -116,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+    }
+
+    private void segueyToMessages(FirebaseUser user){
+        Intent goToMessages = new Intent(MainActivity.this, messagesActivity.class);
+        MainActivity.this.startActivity(goToMessages);
     }
 
 
