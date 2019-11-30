@@ -29,7 +29,7 @@ public class messagesActivity extends AppCompatActivity {
 
 //    Firebase Variables:
     private FirebaseUser                firebaseUser;
-    public  ArrayList<messagesClass>    messages;
+    public  ArrayList<messagesClass>    messages = new ArrayList<>();
 
 
 
@@ -68,7 +68,9 @@ public class messagesActivity extends AppCompatActivity {
         messagesView.setLayoutManager(linearLayoutManager);
 
         /* For testing Recycler View only */
-            messages = new ArrayList<messagesClass>();
+            messages.add(new messagesClass("Autor1","Wiadomość 1"));
+            messages.add(new messagesClass("Autor2","Wiadomość 2"));
+            messages.add(new messagesClass("Autor3","Wiadomość 3"));
             messages.add(new messagesClass("Autor1","Wiadomość 1"));
             messages.add(new messagesClass("Autor2","Wiadomość 2"));
             messages.add(new messagesClass("Autor3","Wiadomość 3"));

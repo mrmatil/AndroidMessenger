@@ -8,9 +8,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messagesRecyclerView"
-        android:layout_width="410dp"
-        android:layout_height="586dp"
+        android:layout_width="409dp"
+        android:layout_height="0dp"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/inputMessageTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loguotButton" />
@@ -38,8 +40,7 @@
     <EditText
         android:id="@+id/inputMessageTextView"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:ems="10"
         android:hint="Wpisz Wiadomość Tutaj"
@@ -47,7 +48,6 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messagesRecyclerView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
