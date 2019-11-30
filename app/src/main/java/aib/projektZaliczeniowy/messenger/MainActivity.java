@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void segueyToMessages(FirebaseUser user){
         Intent goToMessages = new Intent(MainActivity.this, messagesActivity.class);
+        goToMessages.putExtra("user",user);
         MainActivity.this.startActivity(goToMessages);
     }
 

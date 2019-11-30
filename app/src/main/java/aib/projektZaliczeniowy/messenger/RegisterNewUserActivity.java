@@ -88,14 +88,14 @@ public class RegisterNewUserActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            /* if sign in was success*/
+                            /* if register was success*/
                             Log.i("sign in:","OK");
                             FirebaseUser user = mAuth.getCurrentUser();
                             //seguey to next view
                             segueyToMessages(user);
 
                         }else{
-                            /* if sign in failed*/
+                            /* if register failed*/
                             Log.i("Sign in","failed" + task.getException());
                             Toast.makeText(
                                     RegisterNewUserActivity.this,
@@ -110,6 +110,7 @@ public class RegisterNewUserActivity extends AppCompatActivity {
 
     private void segueyToMessages(FirebaseUser user){
         Intent goToMessages = new Intent(RegisterNewUserActivity.this, messagesActivity.class);
+        goToMessages.putExtra("user",user);
         RegisterNewUserActivity.this.startActivity(goToMessages);
     }
 
