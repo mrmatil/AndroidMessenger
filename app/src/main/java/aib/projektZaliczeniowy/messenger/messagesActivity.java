@@ -1,6 +1,7 @@
 package aib.projektZaliczeniowy.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -12,6 +13,11 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
+import aib.projektZaliczeniowy.messenger.messagesutils.CustomAdapter;
+import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
+
 public class messagesActivity extends AppCompatActivity {
 
 //    Outlets:
@@ -22,7 +28,9 @@ public class messagesActivity extends AppCompatActivity {
 
 
 //    Firebase Variables:
-    private FirebaseUser    firebaseUser;
+    private FirebaseUser                firebaseUser;
+    private ArrayList<messagesClass>    messages;
+
 
 
     @Override
@@ -30,6 +38,7 @@ public class messagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
         initOutlets();
+        customizeMessagesView();
     }
 
 
@@ -46,13 +55,28 @@ public class messagesActivity extends AppCompatActivity {
         }
 
         try {
-           String user = firebaseUser.getProviderId();
-           currentUser.setText(user);
+//           String user = firebaseUser.getProviderId();
+//           currentUser.setText(user);
         } catch (NullPointerException error){
             Log.e("Error", String.valueOf(error));
         }
     }
 
+
+    private void customizeMessagesView(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        messagesView.setLayoutManager(linearLayoutManager);
+
+        /* For testing Recycler View only */
+            messages.add(new messagesClass("Autor1","Wiadomość 1"));
+            messages.add(new messagesClass("Autor2","Wiadomość 2"));
+            messages.add(new messagesClass("Autor3","Wiadomość 3"));
+        /* End*/
+
+        CustomAdapter customAdapter = new CustomAdapter(messages, messagesActivity.this);
+        messagesView.setAdapter(customAdapter);
+
+    }
 
 
 
