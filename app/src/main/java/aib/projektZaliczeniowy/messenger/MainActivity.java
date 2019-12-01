@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             /* if log in was success*/
                             Log.i("Log in:","OK");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Log.i("User", String.valueOf(user));
                             segueyToMessages(user);
                             //transfer user to next view
 

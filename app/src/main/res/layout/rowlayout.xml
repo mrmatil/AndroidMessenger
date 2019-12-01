@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#0076796D"
     android:orientation="vertical">
     <!--
     items for a single row of RecyclerView
@@ -14,6 +15,7 @@
         android:textAlignment="textEnd"
         android:textColor="#000"
         android:textSize="10sp" />
+
     <TextView
         android:id="@+id/messagesmessage"
         android:layout_width="wrap_content"

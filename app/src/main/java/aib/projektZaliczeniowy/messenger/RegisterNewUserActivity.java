@@ -30,6 +30,7 @@ public class RegisterNewUserActivity extends AppCompatActivity {
 //    FireBase Variables:
 
     private FirebaseAuth    mAuth;
+    private FirebaseUser    user;
     private String          email;
     private String          password;
 
@@ -90,7 +91,9 @@ public class RegisterNewUserActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
                             /* if register was success*/
                             Log.i("sign in:","OK");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            user = mAuth.getCurrentUser();
+                            Log.i("User", String.valueOf(user));
+
                             //seguey to next view
                             segueyToMessages(user);
 
