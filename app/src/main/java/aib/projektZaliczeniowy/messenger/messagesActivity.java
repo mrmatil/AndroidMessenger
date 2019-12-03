@@ -21,11 +21,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import aib.projektZaliczeniowy.messenger.messagesutils.CustomAdapter;
 import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
@@ -44,7 +49,7 @@ public class messagesActivity extends AppCompatActivity {
     private FirebaseAuth                mAuth;
     private FirebaseDatabase            database;
     private DatabaseReference           reference;
-    public  ArrayList<messagesClass>    messages = new ArrayList<>();
+    public  ArrayList<messagesClass>    allMessages = new ArrayList<>();
 
 
 
@@ -74,7 +79,7 @@ public class messagesActivity extends AppCompatActivity {
         }
 
         try {
-           currentUser.setText(String.valueOf(firebaseUser));
+           currentUser.setText(String.valueOf(firebaseUser.getDisplayName())); //TODO: WHY THE HELL IS HERE NULL POINTER EXCEPTION????
         } catch (NullPointerException error){
             Log.e("Error", String.valueOf(error));
         }
@@ -86,26 +91,35 @@ public class messagesActivity extends AppCompatActivity {
         messagesView.setLayoutManager(linearLayoutManager);
 
         /* For testing Recycler View only */
-        sendMessageToFirebase("Wiadomosc 1");
-        sendMessageToFirebase("Wiadomosc 2");
-        sendMessageToFirebase("Wiadomosc 3");
+//        sendMessageToFirebase("Wiadomosc 1");
+//        sendMessageToFirebase("Wiadomosc 2");
+//        sendMessageToFirebase("Wiadomosc 3");
 
 
         /* End*/
 
-        CustomAdapter customAdapter = new CustomAdapter(messages, messagesActivity.this);
+        updateMessagesViewData(allMessages);
+        CustomAdapter customAdapter = new CustomAdapter(allMessages, messagesActivity.this);
+        customAdapter.notifyDataSetChanged();
         messagesView.setAdapter(customAdapter);
+        messagesView.invalidate();
 
     }
 
+    private void updateMessagesViewData(List<messagesClass> messagesClass){
+        //TODO: segregate messagesClass chronological using lambda expression !!!
+        allMessages.addAll(messagesClass);
+    }
+
+
     private void sendMessageToFirebase(String message){
         List<messagesClass> fullMessage = new ArrayList<>();
-        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message));
-//        fullMessage.put(String.valueOf(firebaseUser.getEmail()),message);
+        Date date = new Date();
+        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date));
         reference.push().setValue(fullMessage, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-
+                //TODO:what happens after update was pushed
             }
         });
     }
@@ -115,16 +129,40 @@ public class messagesActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-//                    Map<String ,String> temp = (Map<String, String>) dataSnapshot.getValue();
-//                    Log.i("dane", String.valueOf(temp));
-////                    messagesClass tempMessage = new messagesClass(temp);
-////                    messages.add(tempMessage);
 
-                    //parsowanie danych z JSONA do obiektów typu messagesClass i potem dodanie ich do ArrayListy messages
+
+                    int counter = 0; // for debug purposes
+                    allMessages.clear();
+
+                    HashMap<String, Object> messages = (HashMap<String, Object>) dataSnapshot.getValue();
+
+                    for(Map.Entry<String,Object> message : messages.entrySet()){
+                        ArrayList<Objects> messageTemp = (ArrayList<Objects>) message.getValue();
+                        for(Object temp : messageTemp){
+                            Log.i(String.valueOf(counter),String.valueOf(temp));
+                            counter++;
+                            HashMap<String,Object> temp2 = (HashMap<String, Object>) temp;
+
+//                            Date    messageDate = (Date) temp2.get("date");
+                            Date messageDate = new Date();
+                            String  author = (String) temp2.get("author");
+                            String  trueMessage = (String) temp2.get("message");
+
+                            allMessages.add(new messagesClass(author,trueMessage,messageDate));
+
+
+                        }
+                    }
+
+                    customizeMessagesView();
+
+
 
                 }
                 catch (NullPointerException error){
                     Log.e("Get message from database error", String.valueOf(error));
+                } catch (Error e){
+                    Log.e("Error",e.getLocalizedMessage());
                 }
 
 
@@ -132,7 +170,7 @@ public class messagesActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //alert for error with reading from database
+                //TODO:alert for error with reading from database
             }
         });
     }

@@ -55,4 +55,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             message = itemView.findViewById(R.id.messagesmessage);
         }
     }
+
+
 }
