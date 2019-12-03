@@ -35,6 +35,13 @@ import java.util.Objects;
 import aib.projektZaliczeniowy.messenger.messagesutils.CustomAdapter;
 import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
 
+/*
+TODO: Sending messages that user typed + while editing is enabled make text view with input message go above keyboard (like in fb messenger)
+TODO: make logout btn working
+TODO: make current user label displaying current user => now error
+TODO: make message cell prettier
+*/
+
 public class messagesActivity extends AppCompatActivity {
 
 //    Outlets:
@@ -59,7 +66,7 @@ public class messagesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messages);
         initOutlets();
         customizeMessagesView();
-        sendTestingDataToFirebase();
+//        sendTestingDataToFirebase();
         getMessagesFromFirebase();
     }
 
@@ -91,11 +98,6 @@ public class messagesActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         messagesView.setLayoutManager(linearLayoutManager);
 
-        /* For testing purposes only */
-//        sendMessageToFirebase("Wiadomosc 1");
-//        sendMessageToFirebase("Wiadomosc 2");
-//        sendMessageToFirebase("Wiadomosc 3");
-        /* End*/
 
         updateMessagesViewData(allMessages);
         CustomAdapter customAdapter = new CustomAdapter(allMessages, messagesActivity.this);
