@@ -1,14 +1,12 @@
 package aib.projektZaliczeniowy.messenger.messagesutils;
 
-import java.time.LocalDate;
-import java.util.Date;
 
 public class messagesClass {
     private String author;
     private String message;
-    private Date date;
+    private Long date;
 
-    public messagesClass(String author, String message, Date date){
+    public messagesClass(String author, String message, Long date){
         this.author=author;
         this.message=message;
         this.date=date;
@@ -22,7 +20,7 @@ public class messagesClass {
         return author;
     }
 
-    public Date getDate() {
+    public Long getDate() {
         return date;
     }
 }

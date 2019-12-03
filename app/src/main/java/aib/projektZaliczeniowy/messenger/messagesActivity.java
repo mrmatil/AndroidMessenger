@@ -59,6 +59,7 @@ public class messagesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messages);
         initOutlets();
         customizeMessagesView();
+        sendTestingDataToFirebase();
         getMessagesFromFirebase();
     }
 
@@ -90,12 +91,10 @@ public class messagesActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         messagesView.setLayoutManager(linearLayoutManager);
 
-        /* For testing Recycler View only */
+        /* For testing purposes only */
 //        sendMessageToFirebase("Wiadomosc 1");
 //        sendMessageToFirebase("Wiadomosc 2");
 //        sendMessageToFirebase("Wiadomosc 3");
-
-
         /* End*/
 
         updateMessagesViewData(allMessages);
@@ -106,16 +105,29 @@ public class messagesActivity extends AppCompatActivity {
 
     }
 
-    private void updateMessagesViewData(List<messagesClass> messagesClass){
-        //TODO: segregate messagesClass chronological using lambda expression !!!
-        allMessages.addAll(messagesClass);
+    private void sendTestingDataToFirebase(){
+        /* For testing purposes only */
+        sendMessageToFirebase("Wiadomosc 1");
+        sendMessageToFirebase("Wiadomosc 2");
+        sendMessageToFirebase("Wiadomosc 3");
+        /* End*/
+    }
+
+    private void updateMessagesViewData(ArrayList<messagesClass> messagesClass){
+
+        /*Segregating messagess by date*/
+        messagesClass.sort(
+                (p1,p2)->
+                        p1.getDate().compareTo(p2.getDate())
+        );
+        allMessages = messagesClass;
     }
 
 
     private void sendMessageToFirebase(String message){
         List<messagesClass> fullMessage = new ArrayList<>();
         Date date = new Date();
-        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date));
+        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime()));
         reference.push().setValue(fullMessage, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
@@ -143,8 +155,8 @@ public class messagesActivity extends AppCompatActivity {
                             counter++;
                             HashMap<String,Object> temp2 = (HashMap<String, Object>) temp;
 
-//                            Date    messageDate = (Date) temp2.get("date");
-                            Date messageDate = new Date();
+                            //TODO: get from temp2.get("date") date
+                            Long    messageDate = (Long) temp2.get("date");
                             String  author = (String) temp2.get("author");
                             String  trueMessage = (String) temp2.get("message");
 
@@ -170,7 +182,7 @@ public class messagesActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //TODO:alert for error with reading from database
+                //TODO:alert for error with reading from database - some alert idk
             }
         });
     }
