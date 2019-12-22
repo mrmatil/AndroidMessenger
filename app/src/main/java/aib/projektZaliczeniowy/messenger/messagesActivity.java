@@ -4,11 +4,16 @@ import org.json.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +43,6 @@ import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
 /*
 TODO: Sending messages that user typed + while editing is enabled make text view with input message go above keyboard (like in fb messenger)
 TODO: make logout btn working
-TODO: make current user label displaying current user => now error
 TODO: make message cell prettier
 */
 
@@ -77,6 +81,7 @@ public class messagesActivity extends AppCompatActivity {
         logoutButton = findViewById(R.id.loguotButton);
         currentMessage = findViewById(R.id.inputMessageTextView);
         messagesView = findViewById(R.id.messagesRecyclerView);
+        currentUser = findViewById(R.id.whoAmITextView);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         reference = database.getReference().child("messages");
@@ -87,7 +92,8 @@ public class messagesActivity extends AppCompatActivity {
         }
 
         try {
-           currentUser.setText(String.valueOf(firebaseUser.getDisplayName())); //TODO: WHY THE HELL IS HERE NULL POINTER EXCEPTION????
+           String tempUser = firebaseUser.getEmail();
+           currentUser.setText(String.valueOf(tempUser));
         } catch (NullPointerException error){
             Log.e("Error", String.valueOf(error));
         }
@@ -133,7 +139,7 @@ public class messagesActivity extends AppCompatActivity {
         reference.push().setValue(fullMessage, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                //TODO:what happens after update was pushed
+                getMessagesFromFirebase();
             }
         });
     }
@@ -190,6 +196,16 @@ public class messagesActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER){
+            sendMessageToFirebase(String.valueOf(currentMessage.getText()));
+            currentMessage.setText("");
+            
+            return super.onKeyUp(keyCode, event);
+        }else{
+            return super.onKeyUp(keyCode, event);
+        }
 
-
+    }
 }
