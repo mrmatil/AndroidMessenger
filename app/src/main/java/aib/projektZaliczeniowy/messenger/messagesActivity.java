@@ -41,8 +41,6 @@ import aib.projektZaliczeniowy.messenger.messagesutils.CustomAdapter;
 import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
 
 /*
-TODO: Sending messages that user typed + while editing is enabled make text view with input message go above keyboard (like in fb messenger)
-TODO: make logout btn working
 TODO: make message cell prettier
 */
 
@@ -74,7 +72,27 @@ public class messagesActivity extends AppCompatActivity {
         getMessagesFromFirebase();
     }
 
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER){
+            sendMessageToFirebase(String.valueOf(currentMessage.getText()));
+            currentMessage.setText("");
 
+            return super.onKeyUp(keyCode, event);
+        }else{
+            return super.onKeyUp(keyCode, event);
+        }
+
+    }
+
+    public void logoutButtonPressed(View view){
+        try {
+            mAuth.signOut();
+            this.finish();
+        } catch (Error e){
+            Toast.makeText(messagesActivity.this,e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
 //    Utilities Functions
 
     private void initOutlets(){
@@ -196,16 +214,5 @@ public class messagesActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_ENTER){
-            sendMessageToFirebase(String.valueOf(currentMessage.getText()));
-            currentMessage.setText("");
-            
-            return super.onKeyUp(keyCode, event);
-        }else{
-            return super.onKeyUp(keyCode, event);
-        }
 
-    }
 }
