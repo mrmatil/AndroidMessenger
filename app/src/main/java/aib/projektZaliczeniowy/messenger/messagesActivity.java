@@ -151,6 +151,7 @@ public class messagesActivity extends AppCompatActivity {
 
 
     private void sendMessageToFirebase(String message){
+        if(message.equals("")) return;
         List<messagesClass> fullMessage = new ArrayList<>();
         Date date = new Date();
         fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime()));

@@ -2,23 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#0076796D"
+    android:background="@android:color/holo_green_light"
     android:orientation="vertical">
     <!--
     items for a single row of RecyclerView
     -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12sp"
+        android:background="@android:color/background_light"/>
     <TextView
         android:id="@+id/messagesname"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textAlignment="textEnd"
         android:textColor="#000"
-        android:textSize="10sp" />
-
+        android:textSize="15sp"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/messagesmessage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textColor="#000"
