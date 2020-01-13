@@ -46,14 +46,14 @@ TODO: make message cell prettier
 
 public class messagesActivity extends AppCompatActivity {
 
-//    Outlets:
+    //    Outlets:
     private Button          logoutButton;
     private TextView        currentUser;
     private TextView        currentMessage;
     private RecyclerView    messagesView;
 
 
-//    Firebase Variables:
+    //    Firebase Variables:
     private FirebaseUser                firebaseUser;
     private FirebaseAuth                mAuth;
     private FirebaseDatabase            database;
@@ -96,14 +96,14 @@ public class messagesActivity extends AppCompatActivity {
 //    Utilities Functions
 
     private void initOutlets(){
-        logoutButton = findViewById(R.id.loguotButton);
-        currentMessage = findViewById(R.id.inputMessageTextView);
-        messagesView = findViewById(R.id.messagesRecyclerView);
-        currentUser = findViewById(R.id.whoAmITextView);
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        reference = database.getReference().child("messages");
-        firebaseUser = mAuth.getCurrentUser();
+        logoutButton    = findViewById(R.id.loguotButton);
+        currentMessage  = findViewById(R.id.inputMessageTextView);
+        messagesView    = findViewById(R.id.messagesRecyclerView);
+        currentUser     = findViewById(R.id.whoAmITextView);
+        mAuth           = FirebaseAuth.getInstance();
+        database        = FirebaseDatabase.getInstance();
+        reference       = database.getReference().child("messages");
+        firebaseUser    = mAuth.getCurrentUser();
 
         if (firebaseUser == null){
             Log.i("Jest nullem?","TAK");

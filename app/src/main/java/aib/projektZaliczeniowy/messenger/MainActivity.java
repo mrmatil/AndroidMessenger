@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         passwordTextView    = findViewById(R.id.passwordTextView);
         loginButton         = findViewById(R.id.loginButton);
         registerButton      = findViewById(R.id.registerButton);
-        dontRememberButton  = findViewById(R.id.lostPasswordButton);
     }
 
     private void firebaseLogInCheck(){
