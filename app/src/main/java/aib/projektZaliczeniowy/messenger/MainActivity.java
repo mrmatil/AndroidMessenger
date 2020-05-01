@@ -3,6 +3,7 @@ package aib.projektZaliczeniowy.messenger;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private String          email;
     private String          password;
 
+//    RxVariables
+    private RxPermissions rxPermissions = new RxPermissions(this);
 
 //    Override Functions:
 
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initOutlets();
+        getPermissions();
 
         /* Linking auth with firebase */
         mAuth = FirebaseAuth.getInstance();
@@ -124,6 +129,20 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(goToMessages);
     }
 
+
+    private void getPermissions(){
+        //TODO: Do something if permission is not granted
+        rxPermissions
+                .request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe( granted ->{
+                    if (granted){
+                        //permission granted
+                    } else{
+                        //permission declined
+                    }
+                });
+
+    }
 
 
 
