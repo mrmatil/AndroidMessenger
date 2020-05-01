@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +57,7 @@ public class messagesActivity extends AppCompatActivity {
     private TextView        currentUser;
     private TextView        currentMessage;
     private RecyclerView    messagesView;
-
+    private SharedPreferences prefs;
 
     //    Firebase Variables:
     private FirebaseUser                firebaseUser;
@@ -78,6 +79,7 @@ public class messagesActivity extends AppCompatActivity {
 //        sendTestingDataToFirebase();
         getMessagesFromFirebase();
         getPermissions();
+        prefs =  this.getSharedPreferences("com.example.app", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -162,7 +164,8 @@ public class messagesActivity extends AppCompatActivity {
         if(message.equals("")) return;
         List<messagesClass> fullMessage = new ArrayList<>();
         Date date = new Date();
-        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime()));
+        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime(),
+                sharedPreferences.getFloat()));
         reference.push().setValue(fullMessage, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
