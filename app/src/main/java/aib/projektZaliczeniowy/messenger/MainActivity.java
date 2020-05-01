@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView    passwordTextView;
     private Button      loginButton;
     private Button      registerButton;
-    private Button      dontRememberButton;
 
 //    FireBase Variables:
 
