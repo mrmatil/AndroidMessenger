@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import aib.projektZaliczeniowy.messenger.mapsUtils.Coordinates;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -137,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe( granted ->{
                     if (granted){
                         //permission granted
+                        LocationManager locationManager = (LocationManager)
+                                getSystemService(Context.LOCATION_SERVICE);
+                        Coordinates coordinates = new Coordinates(this, locationManager);
                     } else{
                         //permission declined
                     }
