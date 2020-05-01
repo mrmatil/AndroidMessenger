@@ -9,6 +9,9 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.Context;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -37,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import aib.projektZaliczeniowy.messenger.mapsUtils.Coordinates;
 import aib.projektZaliczeniowy.messenger.messagesutils.CustomAdapter;
 import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
 
@@ -60,6 +65,10 @@ public class messagesActivity extends AppCompatActivity {
     private DatabaseReference           reference;
     public  ArrayList<messagesClass>    allMessages = new ArrayList<>();
 
+    //    Rx Variables
+    private RxPermissions rxPermissions = new RxPermissions(this);
+
+
 
 
     @Override
@@ -70,6 +79,7 @@ public class messagesActivity extends AppCompatActivity {
         customizeMessagesView();
 //        sendTestingDataToFirebase();
         getMessagesFromFirebase();
+        getPermissions();
     }
 
     @Override
@@ -214,6 +224,24 @@ public class messagesActivity extends AppCompatActivity {
         });
     }
 
+    private void getPermissions(){
+        //TODO: Do something if permission is not granted
+        rxPermissions
+                .request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe( granted ->{
+                    if (granted){
+                        //permission granted
+                        LocationManager locationManager = (LocationManager)
+                                getSystemService(Context.LOCATION_SERVICE);
+                        Coordinates coordinates = new Coordinates(this, locationManager);
+                        coordinates.startCoordinatesListener();
+
+                    } else{
+                        //permission declined
+                    }
+                });
+
+    }
 
 
 }

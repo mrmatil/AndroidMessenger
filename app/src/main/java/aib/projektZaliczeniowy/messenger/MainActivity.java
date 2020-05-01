@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private String          email;
     private String          password;
 
-//    RxVariables
-    private RxPermissions rxPermissions = new RxPermissions(this);
 
 //    Override Functions:
 
@@ -49,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initOutlets();
-        getPermissions();
 
         /* Linking auth with firebase */
         mAuth = FirebaseAuth.getInstance();
@@ -134,22 +131,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getPermissions(){
-        //TODO: Do something if permission is not granted
-        rxPermissions
-                .request(Manifest.permission.ACCESS_FINE_LOCATION)
-                .subscribe( granted ->{
-                    if (granted){
-                        //permission granted
-                        LocationManager locationManager = (LocationManager)
-                                getSystemService(Context.LOCATION_SERVICE);
-                        Coordinates coordinates = new Coordinates(this, locationManager);
-                    } else{
-                        //permission declined
-                    }
-                });
-
-    }
 
 
 
