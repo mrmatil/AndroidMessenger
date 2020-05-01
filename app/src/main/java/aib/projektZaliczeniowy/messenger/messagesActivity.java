@@ -65,10 +65,8 @@ public class messagesActivity extends AppCompatActivity {
     private DatabaseReference           reference;
     public  ArrayList<messagesClass>    allMessages = new ArrayList<>();
 
-    //    Rx Variables
+    //    RxPermissions
     private RxPermissions rxPermissions = new RxPermissions(this);
-
-
 
 
     @Override
@@ -224,7 +222,7 @@ public class messagesActivity extends AppCompatActivity {
         });
     }
 
-    private void getPermissions(){
+    public void getPermissions(){
         //TODO: Do something if permission is not granted
         rxPermissions
                 .request(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -234,14 +232,13 @@ public class messagesActivity extends AppCompatActivity {
                         LocationManager locationManager = (LocationManager)
                                 getSystemService(Context.LOCATION_SERVICE);
                         Coordinates coordinates = new Coordinates(this, locationManager);
-                        coordinates.startCoordinatesListener();
-
                     } else{
                         //permission declined
                     }
                 });
 
     }
+
 
 
 }
