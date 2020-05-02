@@ -1,9 +1,11 @@
 package aib.projektZaliczeniowy.messenger.messagesutils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +22,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public Context                      context;
     private MyViewHolder holder;
     private int position;
-    private ItemClickListener mClickListener;
 
     public CustomAdapter(ArrayList<messagesClass> messages, Context context) {
         this.messages = messages;
@@ -39,6 +40,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder (@NonNull MyViewHolder holder, int position) {
         holder.name.setText(messages.get(position).getAuthor());
         holder.message.setText(messages.get(position).getMessage());
+
+        holder.messageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String longt = messages.get(position).getLognitude();
+                String latit = messages.get(position).getLangitude();
+                Log.i("Coordinates",latit+longt);
+            }
+        });
     }
 
     @Override
@@ -46,36 +56,23 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return messages.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView message;
+        Button messageBtn;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.messagesname);
             message = itemView.findViewById(R.id.messagesmessage);
+            messageBtn = itemView.findViewById(R.id.messagesButton);
+
         }
 
-        @Override
-        public void onClick(View v) {
-            if (mClickListener != null) mClickListener.onItemClick(v, getAdapterPosition());
-        }
+
     }
 
-    // convenience method for getting data at click position
-    messagesClass getItem(int id) {
-        return messages.get(id);
-    }
-
-    // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }
 
 
 
