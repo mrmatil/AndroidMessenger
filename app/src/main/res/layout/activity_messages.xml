@@ -14,8 +14,10 @@
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/inputMessageTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loguotButton" />
+        app:layout_constraintTop_toBottomOf="@+id/loguotButton"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/loguotButton"

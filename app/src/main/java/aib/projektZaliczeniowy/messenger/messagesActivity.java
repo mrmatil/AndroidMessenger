@@ -50,7 +50,7 @@ import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
 TODO: make message cell prettier
 */
 
-public class messagesActivity extends AppCompatActivity{
+public class messagesActivity extends AppCompatActivity implements CustomAdapter.ItemClickListener{
 
     //    Outlets:
     private Button          logoutButton;
@@ -206,7 +206,6 @@ public class messagesActivity extends AppCompatActivity{
 
                             allMessages.add(new messagesClass(author,trueMessage,messageDate,longitude,latitude));
 
-
                         }
                     }
 
@@ -252,5 +251,8 @@ public class messagesActivity extends AppCompatActivity{
     }
 
 
-
+    @Override
+    public void onItemClick(View view, int position) {
+        Log.i("Position: ", String.valueOf(position));
+    }
 }
