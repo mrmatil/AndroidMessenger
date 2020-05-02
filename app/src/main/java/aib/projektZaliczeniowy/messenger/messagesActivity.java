@@ -50,7 +50,7 @@ import aib.projektZaliczeniowy.messenger.messagesutils.messagesClass;
 TODO: make message cell prettier
 */
 
-public class messagesActivity extends AppCompatActivity {
+public class messagesActivity extends AppCompatActivity{
 
     //    Outlets:
     private Button          logoutButton;

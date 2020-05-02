@@ -20,6 +20,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public Context                      context;
     private MyViewHolder holder;
     private int position;
+    private ItemClickListener mClickListener;
 
     public CustomAdapter(ArrayList<messagesClass> messages, Context context) {
         this.messages = messages;
@@ -45,7 +46,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return messages.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView name;
         TextView message;
 
@@ -54,7 +55,28 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             name = itemView.findViewById(R.id.messagesname);
             message = itemView.findViewById(R.id.messagesmessage);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mClickListener != null) mClickListener.onItemClick(v, getAdapterPosition());
+        }
     }
+
+    // convenience method for getting data at click position
+    messagesClass getItem(int id) {
+        return messages.get(id);
+    }
+
+    // allows clicks events to be caught
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
 
 
 }
