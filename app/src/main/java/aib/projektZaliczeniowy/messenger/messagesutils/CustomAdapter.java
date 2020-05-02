@@ -1,6 +1,7 @@
 package aib.projektZaliczeniowy.messenger.messagesutils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import aib.projektZaliczeniowy.messenger.MapsActivity;
 import aib.projektZaliczeniowy.messenger.R;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
@@ -47,6 +49,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 String longt = messages.get(position).getLognitude();
                 String latit = messages.get(position).getLangitude();
                 Log.i("Coordinates",latit+longt);
+                Intent intent = new Intent(context, MapsActivity.class);
+                intent.putExtra("longt",longt);
+                intent.putExtra("latit",latit);
+                context.startActivity(intent);
             }
         });
     }
