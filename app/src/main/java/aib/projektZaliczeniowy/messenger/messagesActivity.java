@@ -165,12 +165,10 @@ public class messagesActivity extends AppCompatActivity {
         List<messagesClass> fullMessage = new ArrayList<>();
         Date date = new Date();
 
-        float longt = prefs.getFloat("Longitude",(float) 1);
-        float latit = prefs.getFloat("Latitude", (float) 2);
+        Float longt = prefs.getFloat("Longitude",(float) 1);
+        Float latit = prefs.getFloat("Latitude", (float) 2);
 
-
-
-        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime(),longt,latit));
+        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime(),longt.toString(),latit.toString()));
 
         reference.push().setValue(fullMessage, new DatabaseReference.CompletionListener() {
             @Override
@@ -203,8 +201,10 @@ public class messagesActivity extends AppCompatActivity {
                             Long    messageDate = (Long) temp2.get("date");
                             String  author = (String) temp2.get("author");
                             String  trueMessage = (String) temp2.get("message");
+                            String longitude = temp2.get("langitude").toString();
+                            String latitude = temp2.get("lognitude").toString();
 
-                            allMessages.add(new messagesClass(author,trueMessage,messageDate,(float) 0,(float) 0));
+                            allMessages.add(new messagesClass(author,trueMessage,messageDate,longitude,latitude));
 
 
                         }
@@ -238,14 +238,16 @@ public class messagesActivity extends AppCompatActivity {
                 .subscribe( granted ->{
                     if (granted){
                         //permission granted
-                        LocationManager locationManager = (LocationManager)
-                                getSystemService(Context.LOCATION_SERVICE);
-                        Coordinates coordinates = new Coordinates(this, locationManager);
-                        coordinates.startCoordinatesListener();
+
                     } else{
                         //permission declined
                     }
                 });
+
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        Coordinates coordinates = new Coordinates(this, locationManager);
+        coordinates.startCoordinatesListener();
 
     }
 

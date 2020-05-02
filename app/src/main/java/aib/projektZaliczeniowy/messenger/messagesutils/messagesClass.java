@@ -5,11 +5,11 @@ public class messagesClass {
     private String author;
     private String message;
     private Long date;
-    private Float longitude;
-    private Float latitude;
+    private String longitude;
+    private String latitude;
 
 
-    public messagesClass(String author, String message, Long date, Float longitude, Float latitude){
+    public messagesClass(String author, String message, Long date, String longitude, String latitude){
         this.author=author;
         this.message=message;
         this.date=date;
@@ -29,7 +29,7 @@ public class messagesClass {
         return date;
     }
 
-    public Float getLognitude() { return longitude; }
+    public String getLognitude() { return longitude; }
 
-    public Float getLangitude() { return latitude; }
+    public String getLangitude() { return latitude; }
 }

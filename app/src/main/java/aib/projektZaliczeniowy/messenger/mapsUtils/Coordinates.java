@@ -52,6 +52,7 @@ public class Coordinates {
                 5000,
                 10,
                 locationListener);
+
     }
 
 
@@ -74,9 +75,10 @@ public class Coordinates {
             SharedPreferences.Editor editor = preferences.edit();
             String long_name = "Longitude";
             String lat_name = "Latitude";
-            editor.putFloat(long_name, (float) loc.getLongitude());
-            editor.putFloat(lat_name, (float) loc.getLatitude());
 
+
+            editor.putFloat(long_name, (float) loc.getLongitude()).commit();
+            editor.putFloat(lat_name, (float) loc.getLatitude()).commit();
 
 
             String longitude = "Longitude: " + loc.getLongitude();
@@ -105,7 +107,9 @@ public class Coordinates {
         public void onProviderDisabled(String provider) {}
 
         @Override
-        public void onProviderEnabled(String provider) {}
+        public void onProviderEnabled(String provider) {
+
+        }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {}
