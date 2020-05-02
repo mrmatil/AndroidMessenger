@@ -79,7 +79,7 @@ public class messagesActivity extends AppCompatActivity {
 //        sendTestingDataToFirebase();
         getMessagesFromFirebase();
         getPermissions();
-        prefs =  this.getSharedPreferences("com.example.app", Context.MODE_PRIVATE);
+        prefs =  this.getSharedPreferences("Coordinates", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -164,8 +164,14 @@ public class messagesActivity extends AppCompatActivity {
         if(message.equals("")) return;
         List<messagesClass> fullMessage = new ArrayList<>();
         Date date = new Date();
-        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime(),
-                sharedPreferences.getFloat()));
+
+        float longt = prefs.getFloat("Longitude",(float) 1);
+        float latit = prefs.getFloat("Latitude", (float) 2);
+
+
+
+        fullMessage.add(new messagesClass(String.valueOf(firebaseUser.getEmail()),message, date.getTime(),longt,latit));
+
         reference.push().setValue(fullMessage, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
@@ -198,7 +204,7 @@ public class messagesActivity extends AppCompatActivity {
                             String  author = (String) temp2.get("author");
                             String  trueMessage = (String) temp2.get("message");
 
-                            allMessages.add(new messagesClass(author,trueMessage,messageDate));
+                            allMessages.add(new messagesClass(author,trueMessage,messageDate,(float) 0,(float) 0));
 
 
                         }
@@ -235,6 +241,7 @@ public class messagesActivity extends AppCompatActivity {
                         LocationManager locationManager = (LocationManager)
                                 getSystemService(Context.LOCATION_SERVICE);
                         Coordinates coordinates = new Coordinates(this, locationManager);
+                        coordinates.startCoordinatesListener();
                     } else{
                         //permission declined
                     }
